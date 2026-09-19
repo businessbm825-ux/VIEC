@@ -12,7 +12,7 @@
       theme: {
         extend: {
           colors: {
-            punchy: {
+            brand: {
               50: '#fff1f2',
               100: '#ffe4e6',
               200: '#fecdd3',
@@ -21,6 +21,13 @@
               700: '#be123c',
               800: '#9f1239',
               900: '#881337',
+            },
+            accent: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
             }
           }
         }
@@ -45,10 +52,10 @@
     .punchy-gradient {
       background: linear-gradient(135deg, #e11d48 0%, #4f46e5 100%);
     }
-    .punchy-border-gradient {
-      border-image: linear-gradient(to right, #e11d48, #4f46e5) 1;
+    .punchy-soft {
+      background: linear-gradient(135deg, rgba(225, 29, 72, 0.08) 0%, rgba(79, 70, 229, 0.08) 100%);
     }
-    /* Custom Scrollbar for Calendar and Tables */
+    /* Custom clean scrollbars */
     ::-webkit-scrollbar {
       height: 6px;
       width: 6px;
@@ -66,15 +73,16 @@
     @media print {
       .no-print { display: none !important; }
       .print-only { display: block !important; }
+      body { background: white !important; }
     }
   </style>
 </head>
 <body class="min-h-screen text-slate-800 flex flex-col antialiased selection:bg-rose-500 selection:text-white">
 
-  <!-- ================= TOAST NOTIFICATION CONTAINER ================= -->
+  <!-- Toast Container -->
   <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col space-y-3 pointer-events-none max-w-sm w-full px-4"></div>
 
-  <!-- ================= CUSTOM MODAL (NO ALERT/CONFIRM) ================= -->
+  <!-- Custom Alert/Confirm Modal (No window.alert/confirm) -->
   <div id="custom-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 transform transition-all space-y-4">
       <div class="flex items-center space-x-3">
@@ -82,8 +90,8 @@
           <i class="ph ph-info font-bold"></i>
         </div>
         <div>
-          <h3 id="modal-title" class="font-extrabold text-slate-900 text-lg leading-tight">System Notice</h3>
-          <p id="modal-subtitle" class="text-xs text-slate-400 font-medium">Vidyasagar Portal</p>
+          <h3 id="modal-title" class="font-extrabold text-slate-900 text-lg leading-tight">Notice</h3>
+          <p id="modal-subtitle" class="text-xs text-slate-400 font-medium">Vidyasagar Ideal Education Center</p>
         </div>
       </div>
       <p id="modal-message" class="text-sm text-slate-600 leading-relaxed"></p>
@@ -94,9 +102,9 @@
     </div>
   </div>
 
-  <!-- ================= AUTHENTICATION VIEW ================= -->
+  <!-- Authentication View -->
   <div id="auth-section" class="flex-1 flex items-center justify-center p-4 sm:p-6 my-auto">
-    <div class="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-200/80 p-8 space-y-6">
+    <div class="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-200/70 border border-slate-200/80 p-8 space-y-6">
       
       <!-- Brand Crest -->
       <div class="text-center space-y-2">
@@ -104,26 +112,26 @@
           <i class="ph ph-chalkboard-teacher font-bold"></i>
         </div>
         <h1 class="text-2xl font-black text-slate-900 tracking-tight">Vidyasagar Ideal</h1>
-        <p class="text-xs font-semibold text-punchy-600 uppercase tracking-widest">Education Center Portal</p>
-        <p class="text-xs text-slate-500">Faculty Attendance, Marks Evaluator & Remuneration</p>
+        <p class="text-xs font-extrabold text-brand-600 uppercase tracking-widest">Education Center Portal</p>
+        <p class="text-xs text-slate-500">Morning (6:30-9:00 AM) & Evening (4:30-8:00 PM) Sessions</p>
       </div>
 
-      <!-- Tab Buttons -->
+      <!-- Auth Switcher Tabs -->
       <div class="flex bg-slate-100 p-1.5 rounded-2xl text-xs font-bold">
-        <button id="tab-login-btn" class="flex-1 py-2 rounded-xl bg-white text-punchy-600 shadow-sm transition">Sign In</button>
-        <button id="tab-signup-btn" class="flex-1 py-2 rounded-xl text-slate-500 hover:text-slate-800 transition">Teacher Sign Up</button>
+        <button id="tab-login-btn" class="flex-1 py-2 rounded-xl bg-white text-brand-600 shadow-sm transition">Sign In</button>
+        <button id="tab-signup-btn" class="flex-1 py-2 rounded-xl text-slate-500 hover:text-slate-800 transition">Register Teacher</button>
       </div>
 
-      <!-- Sign In Form -->
+      <!-- Login Form -->
       <form id="login-form" class="space-y-4">
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Registered Email</label>
-          <input type="email" id="login-email" required placeholder="teacher@vidyasagar.com" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-punchy-500 focus:outline-none text-sm transition">
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Email Address</label>
+          <input type="email" id="login-email" required placeholder="teacher@vidyasagar.com" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm transition">
         </div>
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Account Password</label>
-          <input type="password" id="login-password" required placeholder="••••••••" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-punchy-500 focus:outline-none text-sm transition">
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Password</label>
+          <input type="password" id="login-password" required placeholder="••••••••" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm transition">
         </div>
 
         <button type="submit" class="w-full py-3 punchy-gradient hover:opacity-95 text-white font-bold rounded-xl shadow-lg shadow-rose-500/30 transition transform active:scale-95 flex items-center justify-center space-x-2">
@@ -132,79 +140,74 @@
         </button>
       </form>
 
-      <!-- Sign Up Form -->
-      <form id="signup-form" class="space-y-3.5 hidden">
+      <!-- Signup Form -->
+      <form id="signup-form" class="space-y-3 hidden">
         <div>
           <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Teacher Full Name</label>
-          <input type="text" id="signup-name" required placeholder="e.g. Subhashish Roy" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-punchy-500 focus:outline-none text-sm">
+          <input type="text" id="signup-name" required placeholder="e.g. Subhashish Roy" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
         </div>
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Subject / Specialization</label>
-          <input type="text" id="signup-subject" placeholder="e.g. Mathematics & Physical Science" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-punchy-500 focus:outline-none text-sm">
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Subject / Department</label>
+          <input type="text" id="signup-subject" placeholder="e.g. Mathematics / Life Science" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
         </div>
 
         <div>
           <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Email</label>
-          <input type="email" id="signup-email" required placeholder="name@institution.com" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-punchy-500 focus:outline-none text-sm">
+          <input type="email" id="signup-email" required placeholder="name@domain.com" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
         </div>
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Password</label>
-          <input type="password" id="signup-password" minlength="6" required placeholder="Minimum 6 characters" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-punchy-500 focus:outline-none text-sm">
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Create Password</label>
+          <input type="password" id="signup-password" minlength="6" required placeholder="Minimum 6 characters" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
         </div>
 
         <button type="submit" class="w-full py-2.5 punchy-gradient hover:opacity-95 text-white font-bold rounded-xl shadow-lg transition">
-          Create Teacher Profile
+          Create Account
         </button>
 
-        <p class="text-[11px] text-center text-slate-500 bg-amber-50 p-2 rounded-lg border border-amber-200">
-          <i class="ph ph-info font-bold text-amber-600"></i> Admin Notice: TIC privileges unlock when the account role in Firebase Firestore is set to <strong>"Admin"</strong>.
+        <p class="text-[11px] text-center text-slate-500 bg-amber-50 p-2.5 rounded-xl border border-amber-200 leading-relaxed">
+          <i class="ph ph-shield-check font-bold text-amber-600"></i> All accounts register as <strong>Teacher</strong>. TIC elevation to <strong>"Admin"</strong> can be set from the Firestore console or directly by existing Admins.
         </p>
       </form>
     </div>
   </div>
 
-  <!-- ================= MAIN APPLICATION DASHBOARD ================= -->
+  <!-- Main Application Container -->
   <div id="app-section" class="hidden flex-1 flex flex-col">
     
-    <!-- Top Header Bar -->
-    <header class="bg-white border-b border-slate-200/80 sticky top-0 z-30 shadow-sm no-print">
+    <!-- Top Navigation Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
         
-        <!-- Center Identity -->
+        <!-- Brand Identity -->
         <div class="flex items-center space-x-3">
-          <div class="w-11 h-11 rounded-2xl punchy-gradient flex items-center justify-center text-white shadow-md shadow-rose-500/20">
+          <div class="w-11 h-11 rounded-2xl punchy-gradient flex items-center justify-center text-white shadow-md shadow-rose-500/25">
             <i class="ph ph-book-open-text text-2xl font-bold"></i>
           </div>
           <div>
             <div class="flex items-center space-x-2">
-              <h1 class="font-extrabold text-slate-900 text-lg leading-tight">Vidyasagar Ideal</h1>
-              <span class="px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded-md bg-punchy-100 text-punchy-700">Coaching Portal</span>
+              <h1 class="font-black text-slate-900 text-lg leading-tight">Vidyasagar Ideal</h1>
+              <span class="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-md bg-brand-100 text-brand-700">Coaching Hub</span>
             </div>
-            <p class="text-xs text-slate-500 font-medium">Morning (6:30-9:00 AM) & Evening (4:30-8:00 PM) Batches</p>
+            <p class="text-xs text-slate-500 font-medium">Classes V - X • Morning & Evening Batches</p>
           </div>
         </div>
 
-        <!-- Live Clock & User Profile Area -->
-        <div class="flex items-center space-x-3 sm:space-x-5">
-          
-          <!-- Live Time Badge -->
+        <!-- Live Clock & User Profile Bar -->
+        <div class="flex items-center space-x-3 sm:space-x-4">
           <div class="hidden md:flex flex-col text-right pr-2 border-r border-slate-200">
             <span id="live-clock" class="text-xs font-bold text-slate-800">--:--:--</span>
-            <span id="live-date" class="text-[10px] text-slate-500">Loading...</span>
+            <span id="live-date" class="text-[10px] text-slate-500 font-medium">--</span>
           </div>
 
-          <!-- User Card with Initials Badge -->
-          <div class="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 p-1.5 pr-3 rounded-2xl">
-            <div class="relative">
-              <div id="header-avatar-badge" class="w-10 h-10 rounded-xl punchy-gradient text-white flex items-center justify-center font-extrabold text-sm border-2 border-white shadow-sm">
-                --
-              </div>
-              <span id="header-role-indicator" class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full border-2 border-white bg-emerald-500" title="Active"></span>
+          <!-- Avatar Initials Badge -->
+          <div class="flex items-center space-x-2.5 bg-slate-50 border border-slate-200/80 p-1.5 pr-3 rounded-2xl">
+            <div id="header-avatar-badge" class="w-10 h-10 rounded-xl punchy-gradient text-white flex items-center justify-center font-extrabold text-sm shadow-sm">
+              VI
             </div>
             <div class="text-left">
-              <p id="header-user-name" class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Faculty Member</p>
+              <p id="header-user-name" class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Loading...</p>
               <div class="flex items-center space-x-1.5">
                 <span id="header-role-badge" class="inline-block text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-700">Teacher</span>
                 <span id="header-subject-tag" class="text-[10px] text-slate-400 hidden sm:inline">Faculty</span>
@@ -212,7 +215,6 @@
             </div>
           </div>
 
-          <!-- Logout Button -->
           <button id="logout-btn" title="Sign Out" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition shadow-sm">
             <i class="ph ph-sign-out text-xl font-bold"></i>
           </button>
@@ -220,10 +222,10 @@
       </div>
     </header>
 
-    <!-- Navigation Tab Bar -->
-    <div class="bg-white border-b border-slate-200/80 px-4 sm:px-6 shadow-sm no-print">
-      <div class="max-w-7xl mx-auto flex space-x-1.5 sm:space-x-3 overflow-x-auto py-2.5">
-        <button class="nav-tab px-4 py-2 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap flex items-center space-x-2 bg-punchy-600 text-white shadow-md shadow-rose-500/25 transition" data-target="tab-attendance">
+    <!-- Navigation Tabs Bar -->
+    <div class="bg-white border-b border-slate-200 px-4 sm:px-6 shadow-sm no-print">
+      <div class="max-w-7xl mx-auto flex space-x-2 overflow-x-auto py-2.5">
+        <button class="nav-tab px-4 py-2 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap flex items-center space-x-2 bg-brand-600 text-white shadow-md shadow-rose-500/25 transition" data-target="tab-attendance">
           <i class="ph ph-clock-user text-base"></i>
           <span>Daily Punch</span>
         </button>
@@ -245,53 +247,58 @@
 
         <button class="nav-tab px-4 py-2 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap flex items-center space-x-2 text-slate-600 hover:bg-slate-100 transition" data-target="tab-fees">
           <i class="ph ph-money text-base"></i>
-          <span>Fees & Dues</span>
+          <span>Tuition Fees</span>
         </button>
 
-        <button id="admin-nav-tab" class="nav-tab px-4 py-2 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap flex items-center space-x-2 text-slate-600 hover:bg-slate-100 transition" data-target="tab-admin">
+        <button id="admin-nav-tab" class="nav-tab hidden px-4 py-2 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap flex items-center space-x-2 text-slate-600 hover:bg-slate-100 transition" data-target="tab-admin">
           <i class="ph ph-vault text-base"></i>
-          <span>TIC Cashbook & Remuneration</span>
+          <span>TIC Cashbook & Payroll</span>
+        </button>
+
+        <button id="admin-faculty-nav-tab" class="nav-tab hidden px-4 py-2 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap flex items-center space-x-2 text-slate-600 hover:bg-slate-100 transition" data-target="tab-faculty">
+          <i class="ph ph-users-three text-base"></i>
+          <span>Faculty & Roster</span>
         </button>
       </div>
     </div>
 
-    <!-- Main Content Work Area -->
+    <!-- Main Dynamic Content Region -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full flex-1">
-      
+
       <!-- ================= TAB 1: DAILY ATTENDANCE ================= -->
       <section id="tab-attendance" class="tab-panel space-y-6">
         
-        <!-- Banner with Today's Batch Info -->
-        <div class="punchy-gradient rounded-3xl p-6 text-white shadow-xl flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-wider text-rose-100">Faculty Time Tracker</span>
-            <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Class Attendance & Exit Punch</h2>
-            <p class="text-rose-100 text-xs sm:text-sm mt-0.5">Use <strong>"Now Entry"</strong> & <strong>"Now Exit"</strong> for live punching. If you manually enter or adjust times later in the day, the system will automatically record it as <span class="bg-amber-400 text-slate-900 font-black px-1.5 py-0.5 rounded">Edited</span>.</p>
+        <!-- Hero Banner -->
+        <div class="punchy-gradient rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-wrap items-center justify-between gap-4">
+          <div class="space-y-1">
+            <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-wider text-rose-100">Smart Punch Terminal</span>
+            <h2 class="text-2xl sm:text-3xl font-black">Morning & Evening Session Punch</h2>
+            <p class="text-rose-100 text-xs sm:text-sm max-w-xl">Click <strong>"Now Entry"</strong> and <strong>"Now Exit"</strong> for real-time punching. If you manually type or change times, the system will record it with an <span class="bg-amber-400 text-slate-900 font-extrabold px-1.5 py-0.5 rounded">Edited</span> remark automatically.</p>
           </div>
-          <div class="bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20 text-center">
-            <span class="text-xs text-rose-200 block uppercase font-bold">Today</span>
-            <span id="att-today-pill" class="text-lg font-black tracking-wide">--</span>
+          <div class="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20 text-center">
+            <span class="text-xs text-rose-200 block uppercase font-bold tracking-wider">Active Date</span>
+            <span id="att-today-pill" class="text-xl font-black tracking-wide">--</span>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
-          <!-- Punch Form -->
-          <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+          <!-- Punch Form Card -->
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex items-center space-x-3 pb-3 border-b border-slate-100">
-              <div class="w-10 h-10 rounded-xl bg-rose-50 text-punchy-600 flex items-center justify-center font-bold text-xl">
+              <div class="w-10 h-10 rounded-2xl bg-rose-50 text-brand-600 flex items-center justify-center font-bold text-xl">
                 <i class="ph ph-fingerprint"></i>
               </div>
               <div>
-                <h3 class="font-bold text-slate-900 text-base">Punch Session Attendance</h3>
-                <p class="text-xs text-slate-500">Morning or Evening Class</p>
+                <h3 class="font-extrabold text-slate-900 text-base">Punch Session</h3>
+                <p class="text-xs text-slate-500">Record your class entry & exit</p>
               </div>
             </div>
 
             <form id="attendance-form" class="space-y-4">
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Batch Session</label>
-                <select id="att-session" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-punchy-500 focus:outline-none">
+                <select id="att-session" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none">
                   <option value="Morning">🌅 Morning Batch (6:30 AM - 9:00 AM)</option>
                   <option value="Evening">🌇 Evening Batch (4:30 PM - 8:00 PM)</option>
                 </select>
@@ -299,14 +306,14 @@
 
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Class Handled</label>
-                <select id="att-class" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-punchy-500 focus:outline-none">
+                <select id="att-class" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none">
                   <option value="Class-V">Class-V</option>
                   <option value="Class-VI">Class-VI</option>
                   <option value="Class-VII">Class-VII</option>
                   <option value="Class-VIII">Class-VIII</option>
                   <option value="Class-IX">Class-IX</option>
                   <option value="Class-X">Class-X</option>
-                  <option value="Combined Batch">Combined Batch / Seminar</option>
+                  <option value="Combined Batch">Combined / Revision Batch</option>
                 </select>
               </div>
 
@@ -318,8 +325,9 @@
                       Now Entry
                     </button>
                   </div>
-                  <input type="time" id="att-entry-time" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-punchy-500 focus:outline-none">
+                  <input type="time" id="att-entry-time" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-bold text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none">
                 </div>
+
                 <div>
                   <div class="flex items-center justify-between mb-1">
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Exit Time</label>
@@ -327,47 +335,49 @@
                       Now Exit
                     </button>
                   </div>
-                  <input type="time" id="att-exit-time" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-punchy-500 focus:outline-none">
+                  <input type="time" id="att-exit-time" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-bold text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none">
                 </div>
               </div>
 
-              <div id="att-status-indicator" class="p-3 bg-emerald-50 rounded-2xl border border-emerald-200/80 text-xs text-emerald-800 flex items-center space-x-2">
+              <!-- Automated Status Note -->
+              <div id="att-status-indicator" class="p-3 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs text-emerald-800 flex items-center space-x-2">
                 <i class="ph ph-sparkle text-base text-emerald-600"></i>
-                <span id="att-status-text">Click "Now Entry" to mark live arrival, or type time manually (will auto-label as Edited).</span>
+                <span id="att-status-text">Click "Now Entry" to punch arrival live, or input manually (auto-labeled as Edited).</span>
               </div>
 
               <button type="submit" class="w-full py-3 punchy-gradient hover:opacity-95 text-white font-bold rounded-xl shadow-md transition transform active:scale-95 flex items-center justify-center space-x-2">
                 <i class="ph ph-check-circle font-bold text-lg"></i>
-                <span>Confirm & Submit Attendance</span>
+                <span>Submit Attendance</span>
               </button>
             </form>
           </div>
 
-          <!-- Center Faculty Log Table -->
-          <div class="lg:col-span-2 bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+          <!-- Roster Table Card -->
+          <div class="lg:col-span-2 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <div class="flex items-center space-x-2">
                 <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-                <h3 class="font-bold text-slate-900 text-base">Today's Faculty Attendance Roster</h3>
+                <h3 class="font-extrabold text-slate-900 text-base">Today's Faculty Attendance Roster</h3>
               </div>
-              <span class="text-xs bg-slate-100 text-slate-600 font-bold px-3 py-1 rounded-full">All Sessions</span>
+              <span class="text-xs bg-slate-100 text-slate-600 font-bold px-3 py-1 rounded-full">Both Sessions</span>
             </div>
 
             <div class="overflow-x-auto">
               <table class="w-full text-left text-sm">
                 <thead>
                   <tr class="text-slate-400 font-extrabold text-xs uppercase tracking-wider border-b border-slate-100">
-                    <th class="pb-3">Teacher</th>
+                    <th class="pb-3">Faculty Member</th>
                     <th class="pb-3">Session</th>
                     <th class="pb-3">Class</th>
                     <th class="pb-3">Entry</th>
                     <th class="pb-3">Exit</th>
                     <th class="pb-3">Remark</th>
+                    <th class="pb-3 text-right" id="att-admin-th">Action</th>
                   </tr>
                 </thead>
                 <tbody id="today-attendance-tbody" class="divide-y divide-slate-100">
                   <tr>
-                    <td colspan="6" class="p-8 text-center text-slate-400 font-medium">No faculty attendance logged for today yet.</td>
+                    <td colspan="7" class="p-8 text-center text-slate-400 font-medium">No faculty attendance logged for today yet.</td>
                   </tr>
                 </tbody>
               </table>
@@ -379,39 +389,39 @@
 
       <!-- ================= TAB 2: MONTHLY ATTENDANCE REGISTER ================= -->
       <section id="tab-calendar" class="tab-panel hidden space-y-6">
-        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-5">
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-5">
           
           <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
             <div>
-              <h2 class="text-xl font-extrabold text-slate-900">Institution Attendance Register</h2>
-              <p class="text-xs text-slate-500 mt-0.5">
-                Key: <span class="font-black text-emerald-600">P</span> = Present • 
-                <span class="font-black text-rose-600">A</span> = Absent • 
-                <span class="font-black text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">H</span> = Declared Holiday (Exempted from Absentee Count)
+              <h2 class="text-xl font-black text-slate-900">Institution Attendance Register</h2>
+              <p class="text-xs text-slate-500 mt-1">
+                Keys: <span class="font-black text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">P = Present</span> • 
+                <span class="font-black text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">A = Absent</span> • 
+                <span class="font-black text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">H = Declared Holiday</span> (Exempt from absences)
               </p>
             </div>
 
             <div class="flex items-center space-x-3">
               <label class="text-xs font-bold uppercase text-slate-500">Select Month:</label>
-              <input type="month" id="calendar-month-selector" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-sm font-bold text-slate-800 focus:ring-2 focus:ring-punchy-500">
+              <input type="month" id="calendar-month-selector" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-sm font-bold text-slate-800 focus:ring-2 focus:ring-brand-500">
             </div>
           </div>
 
-          <!-- TIC Holiday Declaration Box -->
-          <div id="tic-holiday-box" class="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-200/80 space-y-3">
+          <!-- TIC Holiday Declaration Area -->
+          <div id="tic-holiday-box" class="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-200 space-y-3">
             <div class="flex items-center justify-between">
               <div class="flex items-center space-x-2">
                 <i class="ph ph-sun-horizon font-bold text-amber-600 text-lg"></i>
-                <span class="text-xs font-black uppercase tracking-wider text-amber-900">TIC Holiday Declaration (Sundays / Pujas / State Holidays)</span>
+                <span class="text-xs font-black uppercase tracking-wider text-amber-900">TIC Holiday Declaration (Sundays, Pujas, State Holidays)</span>
               </div>
-              <span class="text-[10px] text-amber-700 bg-amber-100 px-2 py-0.5 rounded font-bold">Admin Only</span>
+              <span class="text-[10px] text-amber-800 bg-amber-200/80 px-2 py-0.5 rounded font-extrabold">Admin Function</span>
             </div>
 
             <form id="holiday-form" class="flex flex-wrap items-center gap-3">
               <input type="date" id="holiday-date-input" required class="bg-white border border-amber-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-800">
               <input type="text" id="holiday-desc-input" placeholder="Holiday Title (e.g. Saraswati Puja / Sunday)" required class="bg-white border border-amber-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-800 flex-1 min-w-[200px]">
               <button type="submit" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-xl shadow transition">
-                Mark Holiday
+                Declare Holiday
               </button>
             </form>
           </div>
@@ -421,12 +431,11 @@
             <table class="w-full text-center border-collapse text-xs">
               <thead>
                 <tr id="calendar-table-header" class="bg-slate-50 text-slate-500 uppercase tracking-wider">
-                  <th class="p-3 text-left font-bold text-slate-700 min-w-[150px] bg-slate-100 sticky left-0 z-10">Teacher Name</th>
-                  <!-- Days 1 to 31 injected here -->
+                  <th class="p-3 text-left font-bold text-slate-700 min-w-[160px] bg-slate-100 sticky left-0 z-10 border-r border-slate-200">Teacher Name</th>
                 </tr>
               </thead>
               <tbody id="calendar-table-body" class="divide-y divide-slate-100">
-                <!-- Rows injected here -->
+                <!-- Days populated dynamically -->
               </tbody>
             </table>
           </div>
@@ -438,19 +447,19 @@
       <section id="tab-students" class="tab-panel hidden space-y-6">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
-          <!-- Admission / Enrollment Form -->
-          <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+          <!-- Admission Enrollment Card -->
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex items-center space-x-3 pb-3 border-b border-slate-100">
-              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xl">
+              <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xl">
                 <i class="ph ph-student"></i>
               </div>
               <div>
-                <h3 class="font-bold text-slate-900 text-base">Student Admission</h3>
+                <h3 class="font-extrabold text-slate-900 text-base">Student Admission</h3>
                 <p class="text-xs text-slate-500">Classes V to X Enrollment</p>
               </div>
             </div>
 
-            <form id="student-enrol-form" class="space-y-3.5">
+            <form id="student-enrol-form" class="space-y-3">
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Standard / Class</label>
                 <select id="enrol-class" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm font-semibold text-slate-800">
@@ -465,7 +474,7 @@
 
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Roll Number</label>
-                <input type="number" id="enrol-roll" min="1" required placeholder="e.g. 12" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm font-semibold text-slate-800">
+                <input type="number" id="enrol-roll" min="1" required placeholder="e.g. 1" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm font-semibold text-slate-800">
               </div>
 
               <div>
@@ -490,19 +499,19 @@
           </div>
 
           <!-- Marks Entry Section -->
-          <div class="lg:col-span-2 bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-5">
+          <div class="lg:col-span-2 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-5">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
-                <h3 class="font-bold text-slate-900 text-base">Enter Unit Test & Annual Scores</h3>
-                <p class="text-xs text-slate-500">Pick the class, then select the student to automatically load existing scores</p>
+                <h3 class="font-extrabold text-slate-900 text-base">Record Unit Tests & Annual Scores</h3>
+                <p class="text-xs text-slate-500">Select class and roll number to populate and submit evaluations</p>
               </div>
-              <button type="button" id="btn-print-report" class="text-xs px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center space-x-1.5 transition">
+              <button type="button" id="btn-print-report" class="text-xs px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center space-x-1.5 transition">
                 <i class="ph ph-printer font-bold"></i>
                 <span>Print Report Slip</span>
               </button>
             </div>
 
-            <!-- Selectors -->
+            <!-- Class & Roll Selectors -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">1. Choose Class</label>
@@ -525,14 +534,14 @@
               </div>
             </div>
 
-            <!-- Student Card Banner -->
+            <!-- Student Active Banner -->
             <div id="student-selected-banner" class="hidden p-4 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-between">
               <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg">
                   <i class="ph ph-user"></i>
                 </div>
                 <div>
-                  <h4 id="card-student-name" class="font-extrabold text-indigo-950 text-sm">--</h4>
+                  <h4 id="card-student-name" class="font-black text-indigo-950 text-sm">--</h4>
                   <p id="card-student-details" class="text-xs text-indigo-700">Class -- • Roll --</p>
                 </div>
               </div>
@@ -543,17 +552,17 @@
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                   <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">1st Unit Test (%)</label>
-                  <input type="number" id="marks-u1" min="0" max="100" placeholder="0 - 100" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-slate-900 focus:ring-2 focus:ring-punchy-500">
+                  <input type="number" id="marks-u1" min="0" max="100" placeholder="0 - 100" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-slate-900 focus:ring-2 focus:ring-brand-500">
                 </div>
 
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                   <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">2nd Unit Test (%)</label>
-                  <input type="number" id="marks-u2" min="0" max="100" placeholder="0 - 100" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-slate-900 focus:ring-2 focus:ring-punchy-500">
+                  <input type="number" id="marks-u2" min="0" max="100" placeholder="0 - 100" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-slate-900 focus:ring-2 focus:ring-brand-500">
                 </div>
 
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
                   <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Annual Exam (%)</label>
-                  <input type="number" id="marks-annual" min="0" max="100" placeholder="0 - 100" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-slate-900 focus:ring-2 focus:ring-punchy-500">
+                  <input type="number" id="marks-annual" min="0" max="100" placeholder="0 - 100" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-slate-900 focus:ring-2 focus:ring-brand-500">
                 </div>
               </div>
 
@@ -569,11 +578,11 @@
 
       <!-- ================= TAB 4: GROWTH TRACKER ================= -->
       <section id="tab-growth" class="tab-panel hidden space-y-6">
-        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-5">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
           
           <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
             <div>
-              <h2 class="text-xl font-extrabold text-slate-900">Academic Trajectory & Growth Comparison</h2>
+              <h2 class="text-xl font-black text-slate-900">Academic Trajectory & Growth Comparison</h2>
               <p class="text-xs text-slate-500">Compare individual student progress from 1st Unit to Annual Exam against the class average.</p>
             </div>
 
@@ -593,17 +602,17 @@
             </div>
           </div>
 
-          <!-- Key Metrics Pills -->
+          <!-- Benchmark Metrics Cards -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="p-4 rounded-2xl bg-rose-50/60 border border-rose-100">
-              <span class="text-xs text-rose-600 uppercase font-extrabold block">1st Unit Benchmark</span>
-              <span id="metric-avg-u1" class="text-2xl font-black text-rose-950">--%</span>
+            <div class="p-5 rounded-2xl bg-rose-50/70 border border-rose-100">
+              <span class="text-xs text-brand-600 uppercase font-extrabold block">1st Unit Benchmark</span>
+              <span id="metric-avg-u1" class="text-2xl font-black text-brand-950">--%</span>
             </div>
-            <div class="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100">
+            <div class="p-5 rounded-2xl bg-indigo-50/70 border border-indigo-100">
               <span class="text-xs text-indigo-600 uppercase font-extrabold block">2nd Unit Benchmark</span>
               <span id="metric-avg-u2" class="text-2xl font-black text-indigo-950">--%</span>
             </div>
-            <div class="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-100">
+            <div class="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-100">
               <span class="text-xs text-emerald-600 uppercase font-extrabold block">Annual Exam Benchmark</span>
               <span id="metric-avg-annual" class="text-2xl font-black text-emerald-950">--%</span>
             </div>
@@ -624,12 +633,12 @@
 
       <!-- ================= TAB 5: STUDENT FEES & DUES ================= -->
       <section id="tab-fees" class="tab-panel hidden space-y-6">
-        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-5">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
           
           <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
             <div>
-              <h2 class="text-xl font-extrabold text-slate-900">Tuition Fees & Dues Register</h2>
-              <p class="text-xs text-slate-500">Students often pay once in 2 or 3 months. Record collections here and sync directly to the center Cashbook.</p>
+              <h2 class="text-xl font-black text-slate-900">Student Fees & Dues Ledger</h2>
+              <p class="text-xs text-slate-500">Students often clear fees once in 2 or 3 months. Record receipts here with optional auto-sync directly into the Center Cashbook.</p>
             </div>
 
             <button type="button" id="open-fee-collect-modal-btn" class="px-4 py-2 punchy-gradient text-white rounded-xl text-xs font-bold shadow-md hover:opacity-95 transition flex items-center space-x-1.5">
@@ -638,15 +647,15 @@
             </button>
           </div>
 
-          <!-- Class Filter Pills -->
+          <!-- Filter Pills -->
           <div class="flex items-center space-x-2 overflow-x-auto pb-1">
-            <button class="fee-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-white" data-class="All">All Classes</button>
-            <button class="fee-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-V">Class-V</button>
-            <button class="fee-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-VI">Class-VI</button>
-            <button class="fee-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-VII">Class-VII</button>
-            <button class="fee-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-VIII">Class-VIII</button>
-            <button class="fee-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-IX">Class-IX</button>
-            <button class="fee-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-X">Class-X</button>
+            <button class="fee-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-white" data-class="All">All Classes</button>
+            <button class="fee-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-V">Class-V</button>
+            <button class="fee-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-VI">Class-VI</button>
+            <button class="fee-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-VII">Class-VII</button>
+            <button class="fee-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-VIII">Class-VIII</button>
+            <button class="fee-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-IX">Class-IX</button>
+            <button class="fee-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-class="Class-X">Class-X</button>
           </div>
 
           <!-- Fee Table -->
@@ -657,15 +666,15 @@
                   <th class="pb-3">Class & Roll</th>
                   <th class="pb-3">Student Name</th>
                   <th class="pb-3">Guardian Mobile</th>
-                  <th class="pb-3">Rate</th>
-                  <th class="pb-3">Last Paid For</th>
-                  <th class="pb-3">Current Due</th>
+                  <th class="pb-3">Monthly Rate</th>
+                  <th class="pb-3">Last Paid Period</th>
+                  <th class="pb-3">Status</th>
                   <th class="pb-3 text-right">Action</th>
                 </tr>
               </thead>
               <tbody id="fee-students-tbody" class="divide-y divide-slate-100">
                 <tr>
-                  <td colspan="7" class="p-8 text-center text-slate-400 font-medium">No students enrolled yet. Add students using the admission form in the Students tab.</td>
+                  <td colspan="7" class="p-8 text-center text-slate-400 font-medium">No students enrolled yet.</td>
                 </tr>
               </tbody>
             </table>
@@ -677,32 +686,32 @@
       <!-- ================= TAB 6: TIC CASHBOOK & REMUNERATION ================= -->
       <section id="tab-admin" class="tab-panel hidden space-y-6">
         
-        <!-- Cashbook Ledger Section -->
+        <!-- Cashbook Section -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
           <!-- Post Entry Form -->
-          <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex items-center space-x-3 pb-3 border-b border-slate-100">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xl">
+              <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xl">
                 <i class="ph ph-receipt"></i>
               </div>
               <div>
-                <h3 class="font-bold text-slate-900 text-base">Post Ledger Transaction</h3>
-                <p class="text-xs text-slate-500">Direct Cash Flow Record</p>
+                <h3 class="font-extrabold text-slate-900 text-base">Post Ledger Entry</h3>
+                <p class="text-xs text-slate-500">Record center income & expense</p>
               </div>
             </div>
 
             <form id="cashbook-entry-form" class="space-y-3.5">
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Transaction Date</label>
-                <input type="date" id="cb-date" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm font-semibold text-slate-800">
+                <input type="date" id="cb-date" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-slate-800">
               </div>
 
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Entry Type</label>
                 <select id="cb-type" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm font-semibold text-slate-800">
                   <option value="Income">🟢 Income (Fees / Center Collections)</option>
-                  <option value="Expense">🔴 Expense (Rent, Power, Study Sheets)</option>
+                  <option value="Expense">🔴 Expense (Rent, Power, Printouts)</option>
                 </select>
               </div>
 
@@ -713,20 +722,20 @@
 
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Description</label>
-                <input type="text" id="cb-desc" required placeholder="e.g. 3-Month fee collected from Class-IX" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm font-medium text-slate-800">
+                <input type="text" id="cb-desc" required placeholder="e.g. Electricity bill / Study materials" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm font-medium text-slate-800">
               </div>
 
               <button type="submit" class="w-full py-2.5 punchy-gradient hover:opacity-95 text-white font-bold rounded-xl shadow-md transition">
-                Record Transaction
+                Record Entry
               </button>
             </form>
           </div>
 
           <!-- Cashbook Ledger Table -->
-          <div class="lg:col-span-2 bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+          <div class="lg:col-span-2 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
-                <h3 class="font-bold text-slate-900 text-base">Institution Cashbook Register</h3>
+                <h3 class="font-extrabold text-slate-900 text-base">Institution Cashbook Register</h3>
                 <p class="text-xs text-slate-500">Live Inflows, Outflows, and Center Balance</p>
               </div>
               <div class="text-right">
@@ -743,11 +752,12 @@
                     <th class="pb-2.5">Description</th>
                     <th class="pb-2.5 text-right">Inflow (₹)</th>
                     <th class="pb-2.5 text-right">Outflow (₹)</th>
+                    <th class="pb-2.5 text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody id="cashbook-tbody" class="divide-y divide-slate-100">
                   <tr>
-                    <td colspan="4" class="p-6 text-center text-slate-400 font-medium">No ledger entries recorded yet.</td>
+                    <td colspan="5" class="p-6 text-center text-slate-400 font-medium">No ledger entries recorded yet.</td>
                   </tr>
                 </tbody>
               </table>
@@ -756,16 +766,16 @@
 
         </div>
 
-        <!-- Class-Basis Remuneration Calculator (Cycle of 2 or 3 Months) -->
-        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-5">
+        <!-- Periodic Remuneration Calculator -->
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
           <div class="border-b border-slate-100 pb-3">
-            <h3 class="font-bold text-slate-900 text-base">Periodic Remuneration Distributor (2 or 3 Month Cycle)</h3>
+            <h3 class="font-extrabold text-slate-900 text-base">Periodic Remuneration Distributor (2 or 3 Month Cycle)</h3>
             <p class="text-xs text-slate-500">
-              At the end of 2 or 3 months, total fee collection is divided per class taught. Put the per-class rate and total sessions to compute each teacher's payout.
+              Because fee collection occurs over 2 or 3 months, total collection is divided per class taught. Input the per-class rate and session count to compute each teacher's payout.
             </p>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end bg-slate-50 p-4 rounded-2xl border border-slate-200">
             <div>
               <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Rate per Class (₹)</label>
               <input type="number" id="remun-rate-input" placeholder="e.g. 300" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-slate-900">
@@ -781,7 +791,7 @@
             <div>
               <div class="flex items-center justify-between mb-1">
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Classes Taught</label>
-                <button type="button" id="btn-auto-count-classes" class="text-[10px] text-punchy-600 hover:text-punchy-700 font-extrabold">
+                <button type="button" id="btn-auto-count-classes" class="text-[10px] text-brand-600 hover:text-brand-700 font-extrabold">
                   Auto-Count
                 </button>
               </div>
@@ -790,7 +800,7 @@
 
             <div>
               <button type="button" id="btn-add-remun-row" class="w-full py-2.5 punchy-gradient hover:opacity-95 text-white font-bold rounded-xl shadow transition text-sm">
-                Compute & Add Row
+                Compute & Save
               </button>
             </div>
           </div>
@@ -802,9 +812,9 @@
                 <tr class="text-slate-400 font-extrabold text-xs uppercase tracking-wider border-b border-slate-100">
                   <th class="pb-3">Faculty Member</th>
                   <th class="pb-3">Department</th>
-                  <th class="pb-3">Per Class Rate</th>
+                  <th class="pb-3">Rate / Class</th>
                   <th class="pb-3">Classes Handled</th>
-                  <th class="pb-3">Payable Remuneration</th>
+                  <th class="pb-3">Total Payable</th>
                   <th class="pb-3 text-right">Action</th>
                 </tr>
               </thead>
@@ -820,11 +830,43 @@
 
       </section>
 
+      <!-- ================= TAB 7: ADMIN FACULTY ROSTER & ROLES ================= -->
+      <section id="tab-faculty" class="tab-panel hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <h2 class="text-xl font-black text-slate-900">Faculty Roster & Access Controls</h2>
+              <p class="text-xs text-slate-500">TIC can view all registered faculty members, adjust subjects, or promote colleagues to Admin.</p>
+            </div>
+            <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-3 py-1 rounded-full">TIC Only</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead>
+                <tr class="text-slate-400 font-extrabold text-xs uppercase tracking-wider border-b border-slate-100">
+                  <th class="pb-3">Faculty</th>
+                  <th class="pb-3">Email</th>
+                  <th class="pb-3">Department</th>
+                  <th class="pb-3">Access Level</th>
+                  <th class="pb-3 text-right">Role Action</th>
+                </tr>
+              </thead>
+              <tbody id="faculty-roster-tbody" class="divide-y divide-slate-100">
+                <tr>
+                  <td colspan="5" class="p-6 text-center text-slate-400 font-medium">Loading faculty roster...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
     </main>
 
   </div>
 
-  <!-- ================= FEE COLLECTION MODAL ================= -->
+  <!-- Fee Collection Modal -->
   <div id="fee-collect-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -832,7 +874,7 @@
           <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">
             <i class="ph ph-wallet"></i>
           </div>
-          <h3 class="font-extrabold text-slate-900 text-base">Receive Student Fee</h3>
+          <h3 class="font-black text-slate-900 text-base">Receive Student Fee</h3>
         </div>
         <button type="button" id="close-fee-modal-btn" class="text-slate-400 hover:text-slate-600 p-1">
           <i class="ph ph-x text-xl font-bold"></i>
@@ -856,7 +898,7 @@
         </div>
 
         <div class="flex items-center space-x-2 pt-1">
-          <input type="checkbox" id="fee-modal-post-cb" checked class="w-4 h-4 rounded text-punchy-600 focus:ring-punchy-500">
+          <input type="checkbox" id="fee-modal-post-cb" checked class="w-4 h-4 rounded text-brand-600 focus:ring-brand-500">
           <label for="fee-modal-post-cb" class="text-xs font-bold text-slate-700">Auto-post entry into Center Cashbook (Income)</label>
         </div>
 
@@ -867,9 +909,50 @@
     </div>
   </div>
 
-  <!-- ================= FIREBASE & JAVASCRIPT APP LOGIC ================= -->
+  <!-- Printable Report Slip (Appears during window.print) -->
+  <div id="printable-report-area" class="print-only hidden p-8 max-w-2xl mx-auto border-2 border-slate-800 rounded-2xl bg-white text-slate-900">
+    <div class="text-center border-b-2 border-slate-800 pb-4 mb-4">
+      <h2 class="text-2xl font-black uppercase tracking-wide">Vidyasagar Ideal Education Center</h2>
+      <p class="text-xs text-slate-600 font-semibold">Morning & Evening Co-Curricular Coaching Institution</p>
+      <p class="text-xs font-bold mt-1 text-rose-700 uppercase">Student Academic Evaluation Slip</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 text-xs mb-6">
+      <div><strong>Student Name:</strong> <span id="slip-name">--</span></div>
+      <div><strong>Standard / Class:</strong> <span id="slip-class">--</span></div>
+      <div><strong>Roll Number:</strong> <span id="slip-roll">--</span></div>
+      <div><strong>Guardian Contact:</strong> <span id="slip-mobile">--</span></div>
+    </div>
+
+    <table class="w-full text-xs text-center border border-slate-300 mb-8">
+      <thead>
+        <tr class="bg-slate-100 font-bold">
+          <th class="p-2 border">1st Unit Test (%)</th>
+          <th class="p-2 border">2nd Unit Test (%)</th>
+          <th class="p-2 border">Annual Exam (%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="slip-u1" class="p-3 border font-bold text-sm">--</td>
+          <td id="slip-u2" class="p-3 border font-bold text-sm">--</td>
+          <td id="slip-annual" class="p-3 border font-bold text-sm">--</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="flex justify-between items-end pt-12 text-xs">
+      <div>
+        <p class="font-bold">Date of Issue: <span id="slip-date">--</span></p>
+      </div>
+      <div class="text-center">
+        <div class="w-40 border-b border-slate-800 mb-1"></div>
+        <p class="font-extrabold uppercase">Teacher-In-Charge (TIC)</p>
+      </div>
+    </div>
+  </div>
+
   <script type="module">
-    // Firebase Web Modular SDK imports
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { 
       getAuth, 
@@ -883,44 +966,30 @@
       doc, 
       setDoc, 
       getDoc, 
-      getDocs, 
       collection, 
-      query, 
       onSnapshot, 
       addDoc,
-      deleteDoc
+      deleteDoc,
+      updateDoc
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     /*
-     * Firebase Configuration:
-     * Replace with your active Firebase project settings from the Firebase console.
+     * Connected to Vidyasagar Ideal Education Center (viec-848e8)
      */
     const firebaseConfig = {
       apiKey: "AIzaSyAeIYLkNxIcvmY2X1VfZmJqLXfK7V7r8IY",
-    authDomain: "viec-848e8.firebaseapp.com",
-    projectId: "viec-848e8",
-    storageBucket: "viec-848e8.firebasestorage.app",
-    messagingSenderId: "704803473274",
-    appId: "1:704803473274:web:4e5fbcf4ede6832f7f38c3"
+      authDomain: "viec-848e8.firebaseapp.com",
+      projectId: "viec-848e8",
+      storageBucket: "viec-848e8.firebasestorage.app",
+      messagingSenderId: "704803473274",
+      appId: "1:704803473274:web:4e5fbcf4ede6832f7f38c3"
     };
 
-    let app = null;
-    let auth = null;
-    let db = null;
-    let isFirebaseConfigured = false;
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    if (firebaseConfig.apiKey !== "YOUR_API_KEY" && firebaseConfig.projectId !== "vidyasagar-portal") {
-      try {
-        app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        db = getFirestore(app);
-        isFirebaseConfigured = true;
-      } catch (e) {
-        console.warn("Firebase failed to initialize:", e);
-      }
-    }
-
-    // Clean, fresh application state (No pre-filled demo data)
+    // Dynamic State Container
     const state = {
       currentUser: null,
       teachers: [],
@@ -928,24 +997,24 @@
       holidays: {},
       students: [],
       cashbook: [],
-      remunerationCalculations: []
+      remunerations: []
     };
 
-    // Tracking variables for automatic "Edited" remark detection
+    // Tracking markers for automated "Edited" badge detection
     let entrySetViaNow = false;
     let exitSetViaNow = false;
     let growthChart = null;
 
     // Helper: Generate clean initials from teacher name
     function getInitials(name) {
-      if (!name) return 'FM';
+      if (!name) return 'VI';
       const clean = name.replace(/Prof\.|Dr\.|Mr\.|Mrs\.|Ms\./gi, '').trim();
       const parts = clean.split(/\s+/).filter(Boolean);
       if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
       return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
 
-    // Notification Toast System
+    // UI Toast System
     function showToast(title, message, type = 'success') {
       const container = document.getElementById('toast-container');
       if (!container) return;
@@ -985,8 +1054,8 @@
       }, 3500);
     }
 
-    // Custom Modal System (No window.alert / confirm)
-    function showModal({ title, subtitle = 'Center System', message, isConfirm = false, onConfirm = null }) {
+    // UI Modal System
+    function showModal({ title, subtitle = 'Center Notice', message, isConfirm = false, onConfirm = null }) {
       const modal = document.getElementById('custom-modal');
       const modalTitle = document.getElementById('modal-title');
       const modalSubtitle = document.getElementById('modal-subtitle');
@@ -1003,13 +1072,13 @@
       if (isConfirm) {
         if (btnCancel) btnCancel.classList.remove('hidden');
         if (iconContainer) {
-          iconContainer.className = 'w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-amber-100 text-amber-700';
+          iconContainer.className = 'w-12 h-12 rounded-2xl flex items-center justify-center text-2xl bg-amber-100 text-amber-700';
           iconContainer.innerHTML = '<i class="ph ph-question font-bold"></i>';
         }
       } else {
         if (btnCancel) btnCancel.classList.add('hidden');
         if (iconContainer) {
-          iconContainer.className = 'w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-indigo-100 text-indigo-700';
+          iconContainer.className = 'w-12 h-12 rounded-2xl flex items-center justify-center text-2xl bg-indigo-100 text-indigo-700';
           iconContainer.innerHTML = '<i class="ph ph-info font-bold"></i>';
         }
       }
@@ -1024,13 +1093,11 @@
       }
 
       if (btnCancel) {
-        btnCancel.onclick = () => {
-          modal.classList.add('hidden');
-        };
+        btnCancel.onclick = () => modal.classList.add('hidden');
       }
     }
 
-    // Live Clock Updater
+    // Live Clock Initializer
     function initLiveClock() {
       const clockEl = document.getElementById('live-clock');
       const dateEl = document.getElementById('live-date');
@@ -1057,127 +1124,90 @@
       tabLoginBtn.onclick = () => {
         loginForm.classList.remove('hidden');
         signupForm.classList.add('hidden');
-        tabLoginBtn.className = "flex-1 py-2 text-xs sm:text-sm font-bold rounded-xl bg-white text-punchy-600 shadow-sm transition";
-        tabSignupBtn.className = "flex-1 py-2 text-xs sm:text-sm font-bold rounded-xl text-slate-500 hover:text-slate-800 transition";
+        tabLoginBtn.className = "flex-1 py-2 rounded-xl bg-white text-brand-600 shadow-sm transition";
+        tabSignupBtn.className = "flex-1 py-2 rounded-xl text-slate-500 hover:text-slate-800 transition";
       };
 
       tabSignupBtn.onclick = () => {
         loginForm.classList.add('hidden');
         signupForm.classList.remove('hidden');
-        tabSignupBtn.className = "flex-1 py-2 text-xs sm:text-sm font-bold rounded-xl bg-white text-punchy-600 shadow-sm transition";
-        tabLoginBtn.className = "flex-1 py-2 text-xs sm:text-sm font-bold rounded-xl text-slate-500 hover:text-slate-800 transition";
+        tabSignupBtn.className = "flex-1 py-2 rounded-xl bg-white text-brand-600 shadow-sm transition";
+        tabLoginBtn.className = "flex-1 py-2 rounded-xl text-slate-500 hover:text-slate-800 transition";
       };
     }
 
-    // Login Form Submit
+    // Sign In Submission
     if (loginForm) {
       loginForm.onsubmit = async (e) => {
         e.preventDefault();
-        const email = document.getElementById('login-email').value.trim();
-        const password = document.getElementById('login-password').value;
+        const email = document.getElementById('login-email')?.value.trim();
+        const password = document.getElementById('login-password')?.value;
 
-        if (isFirebaseConfigured && auth) {
-          try {
-            const cred = await signInWithEmailAndPassword(auth, email, password);
-            const snap = await getDoc(doc(db, "users", cred.user.uid));
-            if (snap.exists()) {
-              state.currentUser = snap.data();
-            } else {
-              state.currentUser = {
-                uid: cred.user.uid,
-                name: email.split('@')[0],
-                email: email,
-                role: 'Teacher',
-                subject: 'Faculty'
-              };
-            }
-            enterDashboard();
-            showToast('Authenticated', 'Welcome back to Vidyasagar Education Center!');
-            return;
-          } catch (err) {
-            showModal({ title: 'Authentication Error', message: err.message });
-            return;
+        try {
+          const cred = await signInWithEmailAndPassword(auth, email, password);
+          const snap = await getDoc(doc(db, "users", cred.user.uid));
+          if (snap.exists()) {
+            state.currentUser = snap.data();
+          } else {
+            state.currentUser = {
+              uid: cred.user.uid,
+              name: email.split('@')[0],
+              email: email,
+              role: 'Teacher',
+              subject: 'Faculty'
+            };
           }
+          enterDashboard();
+          showToast('Authenticated', 'Welcome back to Vidyasagar Education Center!');
+        } catch (err) {
+          showModal({ title: 'Authentication Error', message: err.message });
         }
-
-        // Local account session fallback
-        const existingUser = state.teachers.find(t => t.email.toLowerCase() === email.toLowerCase());
-        if (existingUser) {
-          state.currentUser = existingUser;
-        } else {
-          state.currentUser = {
-            uid: 'user-' + Date.now(),
-            name: email.split('@')[0],
-            email: email,
-            role: 'Teacher',
-            subject: 'Faculty'
-          };
-          state.teachers.push(state.currentUser);
-        }
-        enterDashboard();
-        showToast('Login Successful', `Welcome, ${state.currentUser.name}`);
       };
     }
 
-    // Sign Up Form Submit
+    // Sign Up Submission
     if (signupForm) {
       signupForm.onsubmit = async (e) => {
         e.preventDefault();
-        const name = document.getElementById('signup-name').value.trim();
-        const subject = document.getElementById('signup-subject').value.trim() || 'General Faculty';
-        const email = document.getElementById('signup-email').value.trim();
-        const password = document.getElementById('signup-password').value;
+        const name = document.getElementById('signup-name')?.value.trim();
+        const subject = document.getElementById('signup-subject')?.value.trim() || 'General Faculty';
+        const email = document.getElementById('signup-email')?.value.trim();
+        const password = document.getElementById('signup-password')?.value;
 
-        if (isFirebaseConfigured && auth) {
-          try {
-            const cred = await createUserWithEmailAndPassword(auth, email, password);
-            const newUser = {
-              uid: cred.user.uid,
-              name,
-              subject,
-              email,
-              role: 'Teacher',
-              createdAt: new Date().toISOString()
-            };
-            await setDoc(doc(db, "users", cred.user.uid), newUser);
-            state.currentUser = newUser;
-            enterDashboard();
-            showToast('Account Created', 'Teacher profile registered successfully!');
-            return;
-          } catch (err) {
-            showModal({ title: 'Sign Up Failed', message: err.message });
-            return;
-          }
+        try {
+          const cred = await createUserWithEmailAndPassword(auth, email, password);
+          const newUser = {
+            uid: cred.user.uid,
+            name,
+            subject,
+            email,
+            role: 'Teacher',
+            createdAt: new Date().toISOString()
+          };
+          await setDoc(doc(db, "users", cred.user.uid), newUser);
+          state.currentUser = newUser;
+          enterDashboard();
+          showToast('Account Created', 'Teacher profile registered successfully!');
+        } catch (err) {
+          showModal({ title: 'Sign Up Failed', message: err.message });
         }
-
-        const newUser = {
-          uid: 'user-' + Date.now(),
-          name,
-          subject,
-          email,
-          role: 'Teacher'
-        };
-        state.teachers.push(newUser);
-        state.currentUser = newUser;
-        enterDashboard();
-        showToast('Registration Successful', `Welcome ${name}! You are registered as faculty.`);
       };
     }
 
-    // Logout Button
+    // Logout
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
       logoutBtn.onclick = () => {
         showModal({
-          title: 'Confirm Logout',
-          message: 'Are you sure you want to sign out from the coaching portal?',
+          title: 'Confirm Sign Out',
+          message: 'Are you sure you want to sign out from the coaching terminal?',
           isConfirm: true,
-          onConfirm: () => {
-            if (isFirebaseConfigured && auth) signOut(auth);
+          onConfirm: async () => {
+            await signOut(auth);
             state.currentUser = null;
             document.getElementById('auth-section')?.classList.remove('hidden');
             document.getElementById('app-section')?.classList.add('hidden');
-            showToast('Logged Out', 'Signed out from center terminal.');
+            showToast('Signed Out', 'Session terminated safely.');
           }
         });
       };
@@ -1196,19 +1226,22 @@
       if (roleBadgeEl) {
         roleBadgeEl.textContent = user.role === 'Admin' ? 'TIC (Admin)' : 'Teacher';
         roleBadgeEl.className = user.role === 'Admin' 
-          ? "inline-block text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-rose-100 text-rose-800"
-          : "inline-block text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-700";
+          ? "inline-block text-[10px] font-black px-2 py-0.5 rounded-md bg-rose-100 text-brand-800"
+          : "inline-block text-[10px] font-black px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-700";
       }
       if (subTagEl) subTagEl.textContent = user.subject || 'Faculty';
 
       const adminTab = document.getElementById('admin-nav-tab');
+      const facultyTab = document.getElementById('admin-faculty-nav-tab');
       const holidayBox = document.getElementById('tic-holiday-box');
 
       if (user.role === 'Admin') {
         adminTab?.classList.remove('hidden');
+        facultyTab?.classList.remove('hidden');
         holidayBox?.classList.remove('hidden');
       } else {
         adminTab?.classList.add('hidden');
+        facultyTab?.classList.add('hidden');
         holidayBox?.classList.add('hidden');
       }
     }
@@ -1217,32 +1250,16 @@
       document.getElementById('auth-section')?.classList.add('hidden');
       document.getElementById('app-section')?.classList.remove('hidden');
       applyUserRoleUI();
-
-      if (isFirebaseConfigured && db) {
-        attachFirestoreRealtimeListeners();
-      } else {
-        renderAllViews();
-      }
+      attachFirestoreRealtimeListeners();
     }
 
-    function renderAllViews() {
-      renderTodayAttendance();
-      populateTeachersInSelects();
-      renderMonthCalendar();
-      populateMarksDropdowns();
-      renderFeeTable();
-      renderCashbook();
-      renderRemunerationTable();
-      initGrowthChart();
-    }
-
-    // Tab Navigation Logic
+    // Navigation Tabs Switcher
     document.querySelectorAll('.nav-tab').forEach(btn => {
       btn.onclick = () => {
         document.querySelectorAll('.nav-tab').forEach(b => {
           b.className = "nav-tab px-4 py-2 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap flex items-center space-x-2 text-slate-600 hover:bg-slate-100 transition";
         });
-        btn.className = "nav-tab px-4 py-2 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap flex items-center space-x-2 bg-punchy-600 text-white shadow-md shadow-rose-500/25 transition";
+        btn.className = "nav-tab px-4 py-2 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap flex items-center space-x-2 bg-brand-600 text-white shadow-md shadow-rose-500/25 transition";
 
         document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
         const target = document.getElementById(btn.dataset.target);
@@ -1251,12 +1268,10 @@
         if (btn.dataset.target === 'tab-calendar') renderMonthCalendar();
         if (btn.dataset.target === 'tab-growth') updateGrowthChart();
         if (btn.dataset.target === 'tab-fees') renderFeeTable();
+        if (btn.dataset.target === 'tab-faculty') renderFacultyRoster();
       };
     });
 
-    // -------------------------------------------------------------
-    // AUTOMATIC "EDITED" VS "NORMAL" ATTENDANCE LOGIC
-    // -------------------------------------------------------------
     const entryInput = document.getElementById('att-entry-time');
     const exitInput = document.getElementById('att-exit-time');
     const statusBox = document.getElementById('att-status-indicator');
@@ -1265,15 +1280,14 @@
     function updatePunchNotice() {
       if (!statusBox || !statusText) return;
       if (!entrySetViaNow) {
-        statusBox.className = "p-3 bg-amber-50 rounded-2xl border border-amber-200/80 text-xs text-amber-900 flex items-center space-x-2";
+        statusBox.className = "p-3 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-900 flex items-center space-x-2";
         statusText.innerHTML = `<i class="ph ph-warning-circle text-amber-600 text-base"></i><span>Manual entry detected: This attendance log will automatically carry the <strong>Edited</strong> remark.</span>`;
       } else {
-        statusBox.className = "p-3 bg-emerald-50 rounded-2xl border border-emerald-200/80 text-xs text-emerald-800 flex items-center space-x-2";
-        statusText.innerHTML = `<i class="ph ph-sparkle text-emerald-600 text-base"></i><span>Live Punch Active: Marked as <strong>Normal</strong> on-time attendance.</span>`;
+        statusBox.className = "p-3 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs text-emerald-800 flex items-center space-x-2";
+        statusText.innerHTML = `<i class="ph ph-sparkle text-emerald-600 text-base"></i><span>Live Punch Active: Stamped as <strong>Normal</strong> on-time attendance.</span>`;
       }
     }
 
-    // Teacher clicks "Now Entry"
     const btnNowEntry = document.getElementById('btn-now-entry');
     if (btnNowEntry) {
       btnNowEntry.onclick = () => {
@@ -1283,11 +1297,10 @@
         }
         entrySetViaNow = true;
         updatePunchNotice();
-        showToast('Live Punch', `Entry stamped at ${entryInput?.value || 'Now'}`);
+        showToast('Live Entry Stamped', `Entry registered at ${entryInput?.value}`);
       };
     }
 
-    // Teacher clicks "Now Exit"
     const btnNowExit = document.getElementById('btn-now-exit');
     if (btnNowExit) {
       btnNowExit.onclick = () => {
@@ -1296,11 +1309,10 @@
           exitInput.value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
         }
         exitSetViaNow = true;
-        showToast('Live Punch', `Exit stamped at ${exitInput?.value || 'Now'}`);
+        showToast('Live Exit Stamped', `Exit registered at ${exitInput?.value}`);
       };
     }
 
-    // If teacher manually types or alters the entry/exit inputs
     entryInput?.addEventListener('input', () => {
       entrySetViaNow = false;
       updatePunchNotice();
@@ -1310,7 +1322,7 @@
       exitSetViaNow = false;
     });
 
-    // Submit Daily Attendance
+    // Attendance Form Submission
     const attForm = document.getElementById('attendance-form');
     if (attForm) {
       attForm.onsubmit = async (e) => {
@@ -1321,10 +1333,7 @@
         const exitTime = exitInput?.value || '';
 
         const today = new Date().toISOString().split('T')[0];
-
-        // Automatic Remark Detection:
-        // Stamped live = Normal; manually typed/changed = Edited
-        const isManualEntry = !entrySetViaNow || (exitTime && !exitSetViaNow);
+        const isManual = !entrySetViaNow || (exitTime && !exitSetViaNow);
 
         const recordId = `att_${today}_${state.currentUser.uid}_${session}`;
         const record = {
@@ -1336,38 +1345,24 @@
           classTaken,
           entryTime,
           exitTime: exitTime || '--:--',
-          edited: isManualEntry,
+          edited: isManual,
           timestamp: new Date().toISOString()
         };
 
-        if (isFirebaseConfigured && db) {
-          try {
-            await setDoc(doc(db, "attendance", recordId), record, { merge: true });
-          } catch (err) {
-            showModal({ title: 'Attendance Error', message: err.message });
-            return;
-          }
-        } else {
-          const existingIdx = state.attendance.findIndex(a => a.id === recordId);
-          if (existingIdx >= 0) {
-            state.attendance[existingIdx] = record;
-          } else {
-            state.attendance.unshift(record);
-          }
-          renderTodayAttendance();
-          renderMonthCalendar();
+        try {
+          await setDoc(doc(db, "attendance", recordId), record, { merge: true });
+          showToast(
+            'Attendance Recorded',
+            `${session} log saved for ${classTaken}! Remark: ${isManual ? 'Edited (Manual Time)' : 'Normal (Live Punch)'}`,
+            isManual ? 'warning' : 'success'
+          );
+          if (exitInput) exitInput.value = '';
+          entrySetViaNow = false;
+          exitSetViaNow = false;
+          updatePunchNotice();
+        } catch (err) {
+          showModal({ title: 'Attendance Error', message: err.message });
         }
-
-        showToast(
-          'Attendance Recorded', 
-          `${session} batch log saved for ${classTaken}! Remark: ${isManualEntry ? 'Edited (Manual/Late Time)' : 'Normal (Live Punch)'}`,
-          isManualEntry ? 'warning' : 'success'
-        );
-
-        if (exitInput) exitInput.value = '';
-        entrySetViaNow = false;
-        exitSetViaNow = false;
-        updatePunchNotice();
       };
     }
 
@@ -1378,19 +1373,21 @@
       const todayLogs = state.attendance.filter(a => a.date === today);
 
       if (todayLogs.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-medium">No faculty attendance logged for today yet. Use the punch form to record sessions.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-400 font-medium">No faculty attendance logged for today yet. Use the punch form to record sessions.</td></tr>`;
         return;
       }
 
+      const isAdmin = state.currentUser?.role === 'Admin';
+
       tbody.innerHTML = todayLogs.map(item => `
-        <tr class="hover:bg-slate-50/80 transition">
+        <tr class="hover:bg-slate-50 transition">
           <td class="p-3 font-semibold text-slate-900 flex items-center space-x-2.5">
             <div class="w-8 h-8 rounded-xl punchy-gradient text-white flex items-center justify-center font-bold text-xs">
               ${getInitials(item.userName)}
             </div>
             <div>
-              <span class="block leading-tight">${item.userName}</span>
-              <span class="text-[10px] text-slate-400 font-normal">Faculty Member</span>
+              <span class="block leading-tight font-bold">${item.userName}</span>
+              <span class="text-[10px] text-slate-400">Faculty</span>
             </div>
           </td>
           <td class="p-3">
@@ -1403,14 +1400,36 @@
           <td class="p-3 font-bold text-slate-800">${item.exitTime || '--:--'}</td>
           <td class="p-3">
             ${item.edited 
-              ? `<span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-amber-100 text-amber-800 border border-amber-300">Edited</span>`
+              ? `<span class="px-2 py-0.5 rounded-md text-[11px] font-black bg-amber-100 text-amber-800 border border-amber-300">Edited</span>`
               : `<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-emerald-100 text-emerald-800">Normal</span>`}
+          </td>
+          <td class="p-3 text-right">
+            ${isAdmin ? `
+              <button onclick="window.deleteAttendanceRecord('${item.id}')" class="text-rose-600 hover:text-rose-800 p-1 font-bold text-xs">
+                <i class="ph ph-trash text-base"></i>
+              </button>
+            ` : '-'}
           </td>
         </tr>
       `).join('');
     }
 
-    // Calendar Month Setup
+    window.deleteAttendanceRecord = async (id) => {
+      showModal({
+        title: 'Delete Attendance Entry',
+        message: 'Are you sure you want to remove this attendance log?',
+        isConfirm: true,
+        onConfirm: async () => {
+          try {
+            await deleteDoc(doc(db, "attendance", id));
+            showToast('Entry Removed', 'Attendance log removed.');
+          } catch (err) {
+            showModal({ title: 'Error', message: err.message });
+          }
+        }
+      });
+    };
+
     const monthPicker = document.getElementById('calendar-month-selector');
     const todayYmd = new Date().toISOString().split('T')[0];
     if (monthPicker) {
@@ -1418,7 +1437,6 @@
       monthPicker.onchange = () => renderMonthCalendar();
     }
 
-    // Declare Holiday Form (TIC / Admin)
     const holidayForm = document.getElementById('holiday-form');
     if (holidayForm) {
       holidayForm.onsubmit = async (e) => {
@@ -1427,40 +1445,33 @@
         const desc = document.getElementById('holiday-desc-input')?.value.trim();
         if (!date || !desc) return;
 
-        if (isFirebaseConfigured && db) {
-          try {
-            await setDoc(doc(db, "holidays", date), { date, title: desc });
-          } catch (err) {
-            showModal({ title: 'Error', message: err.message });
-            return;
-          }
-        } else {
-          state.holidays[date] = desc;
-          renderMonthCalendar();
+        try {
+          await setDoc(doc(db, "holidays", date), { date, title: desc });
+          showToast('Holiday Declared', `${desc} declared for ${date}`);
+          const descInput = document.getElementById('holiday-desc-input');
+          if (descInput) descInput.value = '';
+        } catch (err) {
+          showModal({ title: 'Error', message: err.message });
         }
-
-        showToast('Holiday Marked', `${desc} declared for ${date}`);
-        const holidayDescInput = document.getElementById('holiday-desc-input');
-        if (holidayDescInput) holidayDescInput.value = '';
       };
     }
 
     function renderMonthCalendar() {
       if (!monthPicker) return;
-      const selectedYearMonth = monthPicker.value; // YYYY-MM
+      const selectedYearMonth = monthPicker.value;
       if (!selectedYearMonth) return;
       const [year, month] = selectedYearMonth.split('-').map(Number);
       const totalDays = new Date(year, month, 0).getDate();
 
       const headerRow = document.getElementById('calendar-table-header');
       if (!headerRow) return;
-      headerRow.innerHTML = `<th class="p-3 text-left font-bold text-slate-700 min-w-[150px] bg-slate-100 sticky left-0 z-10">Teacher Name</th>`;
+      headerRow.innerHTML = `<th class="p-3 text-left font-bold text-slate-700 min-w-[160px] bg-slate-100 sticky left-0 z-10 border-r border-slate-200">Teacher Name</th>`;
       
       for (let day = 1; day <= totalDays; day++) {
         const dayString = `${selectedYearMonth}-${String(day).padStart(2, '0')}`;
         const isHol = Boolean(state.holidays[dayString]);
         const th = document.createElement('th');
-        th.className = `p-1 border border-slate-200 min-w-[28px] ${isHol ? 'bg-amber-100 text-amber-900 font-extrabold' : 'text-slate-600 font-bold'}`;
+        th.className = `p-1 border border-slate-200 min-w-[28px] ${isHol ? 'bg-amber-100 text-amber-900 font-black' : 'text-slate-600 font-bold'}`;
         th.textContent = day;
         if (isHol) th.title = state.holidays[dayString];
         headerRow.appendChild(th);
@@ -1484,7 +1495,7 @@
             <div class="w-6 h-6 rounded-lg punchy-gradient text-white flex items-center justify-center text-[10px] font-bold">
               ${getInitials(teacher.name)}
             </div>
-            <span class="truncate max-w-[120px]">${teacher.name}</span>
+            <span class="truncate max-w-[130px] font-bold">${teacher.name}</span>
           </td>
         `;
 
@@ -1518,7 +1529,6 @@
       });
     }
 
-    // Enroll Student Form
     const studentEnrolForm = document.getElementById('student-enrol-form');
     if (studentEnrolForm) {
       studentEnrolForm.onsubmit = async (e) => {
@@ -1544,28 +1554,16 @@
           annual: null
         };
 
-        if (isFirebaseConfigured && db) {
-          try {
-            await setDoc(doc(db, "students", studentId), newStudent);
-          } catch (err) {
-            showModal({ title: 'Enrolment Error', message: err.message });
-            return;
-          }
-        } else {
-          const existingIdx = state.students.findIndex(s => s.id === studentId);
-          if (existingIdx >= 0) state.students[existingIdx] = newStudent;
-          else state.students.push(newStudent);
-          populateMarksDropdowns();
-          renderFeeTable();
-          updateGrowthChart();
+        try {
+          await setDoc(doc(db, "students", studentId), newStudent);
+          showToast('Student Enrolled', `${name} registered for ${stdClass} (Roll ${roll})!`);
+          studentEnrolForm.reset();
+        } catch (err) {
+          showModal({ title: 'Enrolment Error', message: err.message });
         }
-
-        showToast('Student Enrolled', `${name} enrolled in ${stdClass} (Roll ${roll})!`);
-        studentEnrolForm.reset();
       };
     }
 
-    // Marks Dropdowns population
     const marksClassSelector = document.getElementById('marks-class-selector');
     const marksStudentSelector = document.getElementById('marks-student-selector');
 
@@ -1626,14 +1624,13 @@
       };
     }
 
-    // Submit Marks
     const marksSubmitForm = document.getElementById('marks-submit-form');
     if (marksSubmitForm) {
       marksSubmitForm.onsubmit = async (e) => {
         e.preventDefault();
         const stdId = marksStudentSelector?.value;
         if (!stdId) {
-          showModal({ title: 'Select Student', message: 'Please choose a class and student roll first.' });
+          showModal({ title: 'Select Student', message: 'Please select class and roll number first.' });
           return;
         }
 
@@ -1647,45 +1644,41 @@
           annual: annual === '' ? null : Number(annual)
         };
 
-        if (isFirebaseConfigured && db) {
-          try {
-            await setDoc(doc(db, "students", stdId), marksUpdate, { merge: true });
-          } catch (err) {
-            showModal({ title: 'Marks Error', message: err.message });
-            return;
-          }
-        } else {
-          const std = state.students.find(s => s.id === stdId);
-          if (std) {
-            Object.assign(std, marksUpdate);
-            updateGrowthChart();
-          }
+        try {
+          await setDoc(doc(db, "students", stdId), marksUpdate, { merge: true });
+          showToast('Evaluations Recorded', 'Scores updated successfully!');
+        } catch (err) {
+          showModal({ title: 'Marks Error', message: err.message });
         }
-
-        showToast('Scores Saved', 'Evaluations updated successfully!');
       };
     }
 
-    // Print Report Card Slip
+    // Print Report Slip
     const btnPrintReport = document.getElementById('btn-print-report');
     if (btnPrintReport) {
       btnPrintReport.onclick = () => {
         const stdId = marksStudentSelector?.value;
         if (!stdId) {
-          showModal({ title: 'Print Preview', message: 'Please pick an enrolled student to generate their evaluation slip.' });
+          showModal({ title: 'Select Student', message: 'Please pick an enrolled student to generate their evaluation slip.' });
           return;
         }
+
+        const student = state.students.find(s => s.id === stdId);
+        if (!student) return;
+
+        document.getElementById('slip-name').textContent = student.name;
+        document.getElementById('slip-class').textContent = student.class;
+        document.getElementById('slip-roll').textContent = student.roll;
+        document.getElementById('slip-mobile').textContent = student.mobile;
+        document.getElementById('slip-u1').textContent = student.unit1 !== null ? `${student.unit1}%` : '--';
+        document.getElementById('slip-u2').textContent = student.unit2 !== null ? `${student.unit2}%` : '--';
+        document.getElementById('slip-annual').textContent = student.annual !== null ? `${student.annual}%` : '--';
+        document.getElementById('slip-date').textContent = new Date().toLocaleDateString('en-IN');
+
         window.print();
       };
     }
 
-    function populateMarksDropdowns() {
-      if (marksClassSelector && marksClassSelector.value) {
-        marksClassSelector.onchange();
-      }
-    }
-
-    // Growth Analysis Chart Logic
     function initGrowthChart() {
       const canvas = document.getElementById('growthTrajectoryChart');
       if (!canvas) return;
@@ -1789,7 +1782,7 @@
 
       const datasets = [
         {
-          label: `${cls} Overall Benchmark (%)`,
+          label: `${cls} Average Benchmark (%)`,
           data: [avgU1, avgU2, avgAn],
           borderColor: '#94a3b8',
           backgroundColor: 'rgba(148, 163, 184, 0.1)',
@@ -1810,7 +1803,7 @@
           const sAn = target.annual ?? 0;
 
           datasets.push({
-            label: `${target.name}'s Trajectory (%)`,
+            label: `${target.name}'s Score (%)`,
             data: [sU1, sU2, sAn],
             borderColor: '#e11d48',
             backgroundColor: 'rgba(225, 29, 72, 0.15)',
@@ -1828,7 +1821,7 @@
         }
       } else {
         if (insightText) {
-          insightText.textContent = `Showing benchmark performance for ${cls}. Enroll students and enter unit marks to evaluate personal growth trajectories.`;
+          insightText.textContent = `Showing benchmark scores for ${cls}. Select individual student to contrast their scores against class average.`;
         }
       }
 
@@ -1836,12 +1829,11 @@
       growthChart.update();
     }
 
-    // Fee Pill Filters
     let activeFeeClassFilter = 'All';
     document.querySelectorAll('.fee-pill').forEach(pill => {
       pill.onclick = () => {
-        document.querySelectorAll('.fee-pill').forEach(p => p.className = "fee-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200");
-        pill.className = "fee-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-white";
+        document.querySelectorAll('.fee-pill').forEach(p => p.className = "fee-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200");
+        pill.className = "fee-pill px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-white";
         activeFeeClassFilter = pill.dataset.class;
         renderFeeTable();
       };
@@ -1857,7 +1849,7 @@
       }
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-400 font-medium">No students found in this roster. Add students using the admission form in Students tab.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-400 font-medium">No students found in this roster.</td></tr>`;
         return;
       }
 
@@ -1870,11 +1862,11 @@
           <td class="p-3"><span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">${s.lastPaid}</span></td>
           <td class="p-3">
             ${s.due > 0 
-              ? `<span class="px-2 py-0.5 rounded-md bg-rose-100 text-rose-700 font-black text-xs">Due: ₹ ${s.due}</span>`
-              : `<span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-black text-xs">Up to date</span>`}
+              ? `<span class="px-2 py-0.5 rounded-md bg-rose-100 text-brand-700 font-black text-xs">Due: ₹ ${s.due}</span>`
+              : `<span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-black text-xs">Clear</span>`}
           </td>
           <td class="p-3 text-right">
-            <button onclick="window.quickCollectFee('${s.id}')" class="px-3 py-1 text-xs font-bold bg-punchy-50 hover:bg-punchy-100 text-punchy-700 rounded-lg border border-rose-200 transition">
+            <button onclick="window.quickCollectFee('${s.id}')" class="px-3 py-1 text-xs font-bold bg-brand-50 hover:bg-brand-100 text-brand-700 rounded-lg border border-rose-200 transition">
               Collect
             </button>
           </td>
@@ -1882,17 +1874,12 @@
       `).join('');
     }
 
-    // Modal Fee Collect
     const feeModal = document.getElementById('fee-collect-modal');
     const openFeeModalBtn = document.getElementById('open-fee-collect-modal-btn');
     const closeFeeModalBtn = document.getElementById('close-fee-modal-btn');
 
-    if (openFeeModalBtn) {
-      openFeeModalBtn.onclick = () => openFeeModal();
-    }
-    if (closeFeeModalBtn) {
-      closeFeeModalBtn.onclick = () => feeModal?.classList.add('hidden');
-    }
+    if (openFeeModalBtn) openFeeModalBtn.onclick = () => openFeeModal();
+    if (closeFeeModalBtn) closeFeeModalBtn.onclick = () => feeModal?.classList.add('hidden');
 
     function openFeeModal(preselectedStudentId = null) {
       const select = document.getElementById('fee-modal-student-select');
@@ -1900,7 +1887,7 @@
       select.innerHTML = '';
 
       if (state.students.length === 0) {
-        showModal({ title: 'No Students Enrolled', message: 'Please enroll students in the Students tab before recording fee receipts.' });
+        showModal({ title: 'No Students Enrolled', message: 'Please enroll students in Students tab first.' });
         return;
       }
 
@@ -1928,53 +1915,37 @@
         const student = state.students.find(s => s.id === stdId);
         if (!student) return;
 
-        student.lastPaid = period;
-        student.due = Math.max(0, (student.due || 0) - amount);
+        const newDue = Math.max(0, (student.due || 0) - amount);
 
-        if (isFirebaseConfigured && db) {
-          try {
-            await setDoc(doc(db, "students", stdId), {
-              lastPaid: period,
-              due: student.due
-            }, { merge: true });
+        try {
+          await setDoc(doc(db, "students", stdId), {
+            lastPaid: period,
+            due: newDue
+          }, { merge: true });
 
-            if (postToCb) {
-              await addDoc(collection(db, "cashbook"), {
-                date: new Date().toISOString().split('T')[0],
-                type: 'Income',
-                amount: amount,
-                description: `Tuition fee collection from ${student.name} (${student.class}) - Period: ${period}`,
-                created: new Date().toISOString()
-              });
-            }
-          } catch (err) {
-            showModal({ title: 'Error', message: err.message });
-            return;
-          }
-        } else {
           if (postToCb) {
-            state.cashbook.unshift({
-              id: 'cb-' + Date.now(),
+            await addDoc(collection(db, "cashbook"), {
               date: new Date().toISOString().split('T')[0],
               type: 'Income',
               amount: amount,
-              description: `Tuition fee collection from ${student.name} (${student.class}) - Period: ${period}`
+              description: `Fee: ${student.name} (${student.class}) - ${period}`,
+              created: new Date().toISOString()
             });
-            renderCashbook();
           }
-          renderFeeTable();
-        }
 
-        feeModal?.classList.add('hidden');
-        showToast('Payment Acknowledged', `Collected ₹ ${amount} from ${student.name}`);
-        const feeAmountInput = document.getElementById('fee-modal-amount');
-        const feePeriodInput = document.getElementById('fee-modal-period');
-        if (feeAmountInput) feeAmountInput.value = '';
-        if (feePeriodInput) feePeriodInput.value = '';
+          feeModal?.classList.add('hidden');
+          showToast('Fee Received', `Collected ₹ ${amount} from ${student.name}`);
+          const feeAmountInput = document.getElementById('fee-modal-amount');
+          const feePeriodInput = document.getElementById('fee-modal-period');
+          if (feeAmountInput) feeAmountInput.value = '';
+          if (feePeriodInput) feePeriodInput.value = '';
+        } catch (err) {
+          showModal({ title: 'Fee Error', message: err.message });
+        }
       };
     }
 
-    // Cashbook Ledger Logic
+    // Cashbook Posting
     const cbDateInput = document.getElementById('cb-date');
     if (cbDateInput) cbDateInput.value = todayYmd;
 
@@ -1987,35 +1958,22 @@
         const amount = parseFloat(document.getElementById('cb-amount')?.value || 0);
         const desc = document.getElementById('cb-desc')?.value.trim();
 
-        if (isFirebaseConfigured && db) {
-          try {
-            await addDoc(collection(db, "cashbook"), {
-              date,
-              type,
-              amount,
-              description: desc,
-              created: new Date().toISOString()
-            });
-          } catch (err) {
-            showModal({ title: 'Cashbook Error', message: err.message });
-            return;
-          }
-        } else {
-          state.cashbook.unshift({
-            id: 'cb-' + Date.now(),
+        try {
+          await addDoc(collection(db, "cashbook"), {
             date,
             type,
             amount,
-            description: desc
+            description: desc,
+            created: new Date().toISOString()
           });
-          renderCashbook();
+          showToast('Entry Recorded', `₹ ${amount} added as ${type}`);
+          const amtInput = document.getElementById('cb-amount');
+          const descInput = document.getElementById('cb-desc');
+          if (amtInput) amtInput.value = '';
+          if (descInput) descInput.value = '';
+        } catch (err) {
+          showModal({ title: 'Cashbook Error', message: err.message });
         }
-
-        showToast('Transaction Posted', `₹ ${amount} added as ${type}`);
-        const amtInput = document.getElementById('cb-amount');
-        const descInput = document.getElementById('cb-desc');
-        if (amtInput) amtInput.value = '';
-        if (descInput) descInput.value = '';
       };
     }
 
@@ -2028,7 +1986,7 @@
       let totalExpense = 0;
 
       if (state.cashbook.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400 font-medium">No ledger entries recorded yet. Enter income or expenses above.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400 font-medium">No ledger entries recorded yet.</td></tr>`;
         if (netDisplay) netDisplay.textContent = "₹ 0.00";
         return;
       }
@@ -2043,6 +2001,11 @@
             <td class="p-2.5 font-bold text-slate-800">${row.description}</td>
             <td class="p-2.5 text-right font-black text-emerald-600">${row.type === 'Income' ? '₹ ' + row.amount.toLocaleString('en-IN') : '-'}</td>
             <td class="p-2.5 text-right font-black text-rose-600">${row.type === 'Expense' ? '₹ ' + row.amount.toLocaleString('en-IN') : '-'}</td>
+            <td class="p-2.5 text-right">
+              <button onclick="window.deleteCashbookEntry('${row.id}')" class="text-slate-400 hover:text-rose-600 p-1 font-bold">
+                <i class="ph ph-trash text-base"></i>
+              </button>
+            </td>
           </tr>
         `;
       }).join('');
@@ -2054,7 +2017,23 @@
       }
     }
 
-    // Populate Teachers in dropdowns
+    window.deleteCashbookEntry = async (id) => {
+      showModal({
+        title: 'Delete Ledger Entry',
+        message: 'Are you sure you want to remove this transaction record?',
+        isConfirm: true,
+        onConfirm: async () => {
+          try {
+            await deleteDoc(doc(db, "cashbook", id));
+            showToast('Deleted', 'Ledger transaction removed.');
+          } catch (err) {
+            showModal({ title: 'Error', message: err.message });
+          }
+        }
+      });
+    };
+
+    // Periodic Remuneration Calculator
     function populateTeachersInSelects() {
       const remunSelect = document.getElementById('remun-teacher-select');
       if (!remunSelect) return;
@@ -2071,7 +2050,6 @@
       });
     }
 
-    // Auto-Count Classes from Attendance
     const btnAutoCount = document.getElementById('btn-auto-count-classes');
     if (btnAutoCount) {
       btnAutoCount.onclick = () => {
@@ -2080,11 +2058,10 @@
         const count = state.attendance.filter(a => a.userId === teacherId).length;
         const classesInput = document.getElementById('remun-classes-input');
         if (classesInput) classesInput.value = count;
-        showToast('Attendance Analyzed', `Found ${count} logged session(s) in active register for this faculty.`);
+        showToast('Count Computed', `Found ${count} attendance log(s) for this faculty member.`);
       };
     }
 
-    // Calculate & Add Remuneration Row
     const btnAddRemun = document.getElementById('btn-add-remun-row');
     if (btnAddRemun) {
       btnAddRemun.onclick = async () => {
@@ -2093,7 +2070,7 @@
         const teacherId = document.getElementById('remun-teacher-select')?.value;
 
         if (isNaN(rate) || isNaN(classes) || rate <= 0 || classes < 0) {
-          showModal({ title: 'Invalid Input', message: 'Please specify a valid class rate (₹) and number of classes taught.' });
+          showModal({ title: 'Invalid Input', message: 'Specify a valid per-class rate and classes count.' });
           return;
         }
 
@@ -2102,7 +2079,7 @@
 
         const calcRow = {
           teacherId,
-          teacherName: teacher ? teacher.name : 'Faculty Member',
+          teacherName: teacher ? teacher.name : 'Faculty',
           subject: teacher ? teacher.subject : 'General',
           rate,
           classes,
@@ -2110,22 +2087,14 @@
           created: new Date().toISOString()
         };
 
-        if (isFirebaseConfigured && db) {
-          try {
-            await addDoc(collection(db, "remunerations"), calcRow);
-          } catch (err) {
-            showModal({ title: 'Calculation Error', message: err.message });
-            return;
-          }
-        } else {
-          calcRow.id = 'rc-' + Date.now();
-          state.remunerationCalculations.push(calcRow);
-          renderRemunerationTable();
+        try {
+          await addDoc(collection(db, "remunerations"), calcRow);
+          showToast('Distribution Computed', `Payable: ₹ ${total} for ${teacher ? teacher.name : ''}`);
+          const classesInput = document.getElementById('remun-classes-input');
+          if (classesInput) classesInput.value = '';
+        } catch (err) {
+          showModal({ title: 'Error', message: err.message });
         }
-
-        showToast('Payout Calculated', `Payable: ₹ ${total} for ${teacher ? teacher.name : ''}`);
-        const classesInput = document.getElementById('remun-classes-input');
-        if (classesInput) classesInput.value = '';
       };
     }
 
@@ -2133,12 +2102,12 @@
       const tbody = document.getElementById('remun-dist-tbody');
       if (!tbody) return;
 
-      if (state.remunerationCalculations.length === 0) {
+      if (state.remunerations.length === 0) {
         tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 font-medium">No calculation rows added yet. Enter rate and classes above.</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = state.remunerationCalculations.map((item, index) => `
+      tbody.innerHTML = state.remunerations.map(item => `
         <tr class="hover:bg-slate-50 transition">
           <td class="p-3 font-extrabold text-slate-900">${item.teacherName}</td>
           <td class="p-3 text-slate-600 font-semibold">${item.subject}</td>
@@ -2146,7 +2115,7 @@
           <td class="p-3 font-bold text-slate-800">${item.classes} Classes</td>
           <td class="p-3 font-black text-indigo-700">₹ ${item.total.toLocaleString('en-IN')}</td>
           <td class="p-3 text-right">
-            <button onclick="window.removeRemunRow('${item.id || index}')" class="text-rose-600 hover:text-rose-800 font-bold text-xs p-1">
+            <button onclick="window.removeRemunRow('${item.id}')" class="text-rose-600 hover:text-rose-800 font-bold text-xs p-1">
               Remove
             </button>
           </td>
@@ -2154,30 +2123,78 @@
       `).join('');
     }
 
-    window.removeRemunRow = async (idOrIndex) => {
-      if (isFirebaseConfigured && db && typeof idOrIndex === 'string' && !idOrIndex.startsWith('rc-')) {
-        try {
-          await deleteDoc(doc(db, "remunerations", idOrIndex));
-        } catch (err) {
-          showModal({ title: 'Error', message: err.message });
-        }
-      } else {
-        const idx = typeof idOrIndex === 'number' ? idOrIndex : state.remunerationCalculations.findIndex(r => r.id === idOrIndex);
-        if (idx >= 0) state.remunerationCalculations.splice(idx, 1);
-        renderRemunerationTable();
+    window.removeRemunRow = async (id) => {
+      try {
+        await deleteDoc(doc(db, "remunerations", id));
+        showToast('Removed', 'Remuneration row deleted.');
+      } catch (err) {
+        showModal({ title: 'Error', message: err.message });
       }
-      showToast('Row Removed', 'Calculation entry removed.');
     };
 
-    // Attach Realtime Firestore Listeners
+    function renderFacultyRoster() {
+      const tbody = document.getElementById('faculty-roster-tbody');
+      if (!tbody) return;
+
+      if (state.teachers.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400 font-medium">No faculty members found.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = state.teachers.map(t => {
+        const isAdmin = t.role === 'Admin';
+        return `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="p-3 font-bold text-slate-900 flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-xl punchy-gradient text-white flex items-center justify-center font-bold text-xs">
+                ${getInitials(t.name)}
+              </div>
+              <span>${t.name}</span>
+            </td>
+            <td class="p-3 text-slate-600">${t.email}</td>
+            <td class="p-3 text-slate-700 font-semibold">${t.subject || 'Faculty'}</td>
+            <td class="p-3">
+              <span class="px-2.5 py-0.5 rounded-md text-xs font-black ${isAdmin ? 'bg-rose-100 text-brand-800 border border-rose-200' : 'bg-indigo-100 text-indigo-800'}">
+                ${t.role}
+              </span>
+            </td>
+            <td class="p-3 text-right">
+              ${t.uid !== state.currentUser?.uid ? `
+                <button onclick="window.toggleUserRole('${t.uid}', '${isAdmin ? 'Teacher' : 'Admin'}')" class="text-xs font-bold px-3 py-1 rounded-lg border ${isAdmin ? 'border-amber-300 text-amber-800 bg-amber-50 hover:bg-amber-100' : 'border-indigo-300 text-indigo-800 bg-indigo-50 hover:bg-indigo-100'} transition">
+                  ${isAdmin ? 'Demote to Teacher' : 'Promote to Admin (TIC)'}
+                </button>
+              ` : '<span class="text-xs text-slate-400 font-bold">Current Account</span>'}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    window.toggleUserRole = async (uid, newRole) => {
+      showModal({
+        title: `Change User Access`,
+        message: `Are you sure you want to change this user's role to "${newRole}"?`,
+        isConfirm: true,
+        onConfirm: async () => {
+          try {
+            await updateDoc(doc(db, "users", uid), { role: newRole });
+            showToast('Role Updated', `Faculty member updated to ${newRole}`);
+          } catch (err) {
+            showModal({ title: 'Error', message: err.message });
+          }
+        }
+      });
+    };
+
     function attachFirestoreRealtimeListeners() {
-      // 1. Users / Teachers
+      // 1. Users
       onSnapshot(collection(db, "users"), (snap) => {
         state.teachers = [];
         snap.forEach(d => state.teachers.push(d.data()));
         populateTeachersInSelects();
         renderMonthCalendar();
-      }, (err) => console.warn(err));
+        renderFacultyRoster();
+      });
 
       // 2. Attendance
       onSnapshot(collection(db, "attendance"), (snap) => {
@@ -2185,24 +2202,24 @@
         snap.forEach(d => state.attendance.push(d.data()));
         renderTodayAttendance();
         renderMonthCalendar();
-      }, (err) => console.warn(err));
+      });
 
       // 3. Holidays
       onSnapshot(collection(db, "holidays"), (snap) => {
         state.holidays = {};
         snap.forEach(d => { state.holidays[d.id] = d.data().title; });
         renderMonthCalendar();
-      }, (err) => console.warn(err));
+      });
 
       // 4. Students
       onSnapshot(collection(db, "students"), (snap) => {
         state.students = [];
         snap.forEach(d => state.students.push({ id: d.id, ...d.data() }));
-        populateMarksDropdowns();
+        if (marksClassSelector?.value) marksClassSelector.onchange();
         renderFeeTable();
         populateGrowthStudentPicker();
         updateGrowthChart();
-      }, (err) => console.warn(err));
+      });
 
       // 5. Cashbook
       onSnapshot(collection(db, "cashbook"), (snap) => {
@@ -2210,40 +2227,38 @@
         snap.forEach(d => state.cashbook.push({ id: d.id, ...d.data() }));
         state.cashbook.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
         renderCashbook();
-      }, (err) => console.warn(err));
+      });
 
       // 6. Remunerations
       onSnapshot(collection(db, "remunerations"), (snap) => {
-        state.remunerationCalculations = [];
-        snap.forEach(d => state.remunerationCalculations.push({ id: d.id, ...d.data() }));
+        state.remunerations = [];
+        snap.forEach(d => state.remunerations.push({ id: d.id, ...d.data() }));
         renderRemunerationTable();
-      }, (err) => console.warn(err));
+      });
     }
 
-    // Boot Lifecycle
+    // Lifecycle Boot
     window.addEventListener('DOMContentLoaded', () => {
       initLiveClock();
+      initGrowthChart();
 
-      if (isFirebaseConfigured && auth) {
-        onAuthStateChanged(auth, async (user) => {
-          if (user) {
-            const snap = await getDoc(doc(db, "users", user.uid));
-            if (snap.exists()) {
-              state.currentUser = snap.data();
-            } else {
-              state.currentUser = {
-                uid: user.uid,
-                name: user.email.split('@')[0],
-                email: user.email,
-                role: 'Teacher'
-              };
-            }
-            enterDashboard();
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const snap = await getDoc(doc(db, "users", user.uid));
+          if (snap.exists()) {
+            state.currentUser = snap.data();
+          } else {
+            state.currentUser = {
+              uid: user.uid,
+              name: user.email.split('@')[0],
+              email: user.email,
+              role: 'Teacher'
+            };
           }
-        });
-      }
+          enterDashboard();
+        }
+      });
     });
-
   </script>
 </body>
 </html>
